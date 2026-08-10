@@ -39,7 +39,7 @@ onBeforeUnmount(() => {
       <div class="card">
         <h1>🌲 树林漫步</h1>
         <p>点击开始后，点击画面进入鼠标视角，ESC 释放</p>
-        <button class="btn" @click="start">点击开始</button>
+        <button class="btn" @click="start">开始游戏</button>
       </div>
     </div>
 
@@ -55,7 +55,9 @@ onBeforeUnmount(() => {
     </button>
     <div v-if="started && showHelp" class="help">
       <div class="help-row"><kbd>鼠标</kbd><span>移动转动视角</span></div>
-      <div class="help-row"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>前后左右移动</span></div>
+      <div class="help-row">
+        <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>前后左右移动</span>
+      </div>
       <div class="help-row"><kbd>Space</kbd><span>跳跃</span></div>
       <div class="help-row"><kbd>Ctrl</kbd><span>下蹲（按住）</span></div>
       <div class="help-row"><kbd>Shift</kbd><span>加速冲刺</span></div>
@@ -116,7 +118,9 @@ onBeforeUnmount(() => {
   background: #4caf50;
   color: #fff;
   cursor: pointer;
-  transition: transform 0.15s, background 0.15s;
+  transition:
+    transform 0.15s,
+    background 0.15s;
 }
 
 .btn:hover {

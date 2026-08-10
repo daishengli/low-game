@@ -14,7 +14,8 @@ import * as THREE from 'three'
  *
  * 返回一个 dispose() 用于在组件卸载时释放资源。
  */
-export function createForestGame(container) {
+export function createForestGame(container, opts = {}) {
+  const hooks = opts.hooks || {}
   // ---- 基础三件套 ----
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(0x87ceeb) // 天空蓝
@@ -197,6 +198,9 @@ export function createForestGame(container) {
 
   scene.add(player)
 
+  // ---- Hooks: 初始化回调（战斗系统等扩展用）----
+  hooks.onInit?.({ scene, camera, player, container, THREE })
+
   // ---- 输入 ----
   const keys = {
     forward: false,
@@ -246,6 +250,7 @@ export function createForestGame(container) {
 
   function onKeyDown(e) {
     setKey(e, true)
+    hooks.onKeyDown?.(e)
   }
   function onKeyUp(e) {
     setKey(e, false)
@@ -305,6 +310,8 @@ export function createForestGame(container) {
     pointerLocked = document.pointerLockElement === renderer.domElement
   }
   function onMouseDown(e) {
+    // 先给 hook 处理（如攻击）
+    if (hooks.onMouseDown?.(e, { pointerLocked })) return
     if (pointerLocked) return
     if (e.button === 0) {
       dragging = true
@@ -453,6 +460,9 @@ export function createForestGame(container) {
     camTarget.y += camHeight
     camera.lookAt(camTarget)
 
+    // ---- Hooks: 每帧更新回调 ----
+    hooks.onUpdate?.(dt, { scene, camera, player })
+
     renderer.render(scene, camera)
   }
   animate()
@@ -470,6 +480,7 @@ export function createForestGame(container) {
 
   // ---- 清理 ----
   function dispose() {
+    hooks.onDispose?.()
     cancelAnimationFrame(rafId)
     window.removeEventListener('keydown', onKeyDown)
     window.removeEventListener('keyup', onKeyUp)
@@ -495,5 +506,5 @@ export function createForestGame(container) {
     }
   }
 
-  return { dispose }
+  return { dispose, scene, camera, player }
 }
