@@ -180,6 +180,11 @@ export function createForestGame(container, opts = {}) {
   armR.position.x = 0.5
   player.add(armR)
 
+  // 右手挂载点：战斗系统用于挂载武器模型
+  const rightHand = new THREE.Group()
+  rightHand.position.set(0, -0.45, 0.05) // 手部位置（手臂底部，稍向前）
+  armR.add(rightHand)
+
   const legL = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.85, 0.26), pantsMat)
   legL.position.set(-0.18, 0.45, 0)
   legL.castShadow = true
@@ -199,7 +204,7 @@ export function createForestGame(container, opts = {}) {
   scene.add(player)
 
   // ---- Hooks: 初始化回调（战斗系统等扩展用）----
-  hooks.onInit?.({ scene, camera, player, container, THREE })
+  hooks.onInit?.({ scene, camera, player, container, THREE, rightHand, armR })
 
   // ---- 输入 ----
   const keys = {
@@ -461,7 +466,7 @@ export function createForestGame(container, opts = {}) {
     camera.lookAt(camTarget)
 
     // ---- Hooks: 每帧更新回调 ----
-    hooks.onUpdate?.(dt, { scene, camera, player })
+    hooks.onUpdate?.(dt, { scene, camera, player, pointerLocked })
 
     renderer.render(scene, camera)
   }
@@ -474,6 +479,7 @@ export function createForestGame(container, opts = {}) {
     camera.aspect = w / h
     camera.updateProjectionMatrix()
     renderer.setSize(w, h)
+    hooks.onResize?.()
   }
   const resizeObs = new ResizeObserver(onResize)
   resizeObs.observe(container)

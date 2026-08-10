@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { createForestGame } from '@/game/forest'
+import { createCombatHooks } from '@/game/combat-integration'
 
 const stage = ref(null)
 const started = ref(false)
@@ -10,7 +11,9 @@ let game = null
 
 function start() {
   if (started.value || !stage.value) return
-  game = createForestGame(stage.value)
+  game = createForestGame(stage.value, {
+    hooks: createCombatHooks(),
+  })
   started.value = true
   showHelp.value = false
 }
@@ -61,6 +64,8 @@ onBeforeUnmount(() => {
       <div class="help-row"><kbd>Space</kbd><span>跳跃</span></div>
       <div class="help-row"><kbd>Ctrl</kbd><span>下蹲（按住）</span></div>
       <div class="help-row"><kbd>Shift</kbd><span>加速冲刺</span></div>
+      <div class="help-row"><kbd>左键</kbd><span>攻击（需锁定鼠标）</span></div>
+      <div class="help-row"><kbd>R</kbd><span>切换武器</span></div>
       <div class="help-row"><kbd>ESC</kbd><span>退出鼠标视角</span></div>
     </div>
   </div>
