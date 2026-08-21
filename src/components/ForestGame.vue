@@ -43,6 +43,41 @@ onBeforeUnmount(() => {
         <h1>🌲 树林漫步</h1>
         <p>点击开始后，点击画面进入鼠标视角，ESC 释放</p>
         <button class="btn" @click="start">开始游戏</button>
+        <div class="repo-link">
+          <span class="repo-divider"></span>
+          <a
+            href="https://github.com/daishengli/low-game"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+          >
+            <svg
+              class="github-icon"
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.74 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.58.23 2.75.11 3.04.73.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.35.78 1.04.78 2.1 0 1.51-.01 2.73-.01 3.1 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5Z"
+              />
+            </svg>
+            <span>开源 · GitHub</span>
+            <svg
+              class="external-icon"
+              viewBox="0 0 16 16"
+              width="10"
+              height="10"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 8.28 8.78a.75.75 0 0 1-1.06-1.06l4.75-4.75-1.543-1.543A.25.25 0 0 1 10.604 1ZM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5C2 13.216 2.784 14 3.75 14h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5Z"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -131,6 +166,47 @@ onBeforeUnmount(() => {
 .btn:hover {
   background: #5dbf61;
   transform: translateY(-1px);
+}
+
+.repo-link {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.repo-divider {
+  display: block;
+  width: 56px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.repo-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.repo-link a:hover {
+  color: #fff;
+}
+
+.github-icon,
+.external-icon {
+  flex-shrink: 0;
+  display: block;
+}
+
+.external-icon {
+  margin-left: 2px;
+  opacity: 0.7;
 }
 
 .help {
